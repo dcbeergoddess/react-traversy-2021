@@ -78,7 +78,35 @@ VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=dsznajd
 - `rcc` - class based component
 - `rce` - class component and export at bottom
 - `rafce` - arrow function that exports at bottom
-* Creates boilerplate of a function component --> DO NOT NEED IMPORT REACT ANYMORE
+* Creates boilerplate of a function component --> DO NOT NEED IMPORT REACT ANYMORE (unless you are creating a class)
 ![function boilerplate](assets/react7.png)
+```js
+//EXAMPLE OF USING A CLASS
+import React, { Component } from 'react'
+
+export class Header extends Component {
+  render() {
+    return (
+      <div>
+        
+      </div>
+    )
+  }
+}
+
+export default Header
+```
 * import component into `App.js`
 ![import component](assets/react8.png)
+```js
+//EXAMPLE OF IMPORTING A CLASS
+import React from 'react'
+import Header from './components/Header'
+
+class App extends React.Component {
+  render() {
+    return <h1>Hello from a class</h1>
+  }
+} 
+```
+
