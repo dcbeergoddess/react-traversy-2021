@@ -110,3 +110,16 @@ class App extends React.Component {
 } 
 ```
 
+## Pass in Component `Props`
+* How to pass in props and use them
+![pass in title props](assets/props.png)
+* can set default props if none is passed in
+![default props](assets/props1.png)
+* can destructure props 
+![destructure props](assets/props2.png)
+* There are also Prop Types --> make code more robust --> use `impt` with extension --> you can also use Typescript with React
+* Use and pass in number instead of string for title, will render with warnings in the console
+![setting prop types](assets/props3.png)
+* Set `PropType` to be required
+![require prop types](assets/props4.png)
+
