@@ -54,6 +54,31 @@ React Hooks are functions that le us hook into the React state and lifecyle feat
 * Use index.html to add Bootstrap CDN, etc.
 * In `App.js` --> we see function component with JSX(looks like HTML)
 ![React App.js](assets/react3.png)
+- instead of `for` attribute use `htmlFor`
+- instead of `class` attribute use `className`
+- dynamic --> can have JS expressions and variables `src={logo}`
+- Clean up some files and delete what is in the div
+- CAN ONLY HAVE ONE PARENT ELEMENT, CAN NOT ADD NEW H2 AFTER THE DIV
+![Clean up App.js](assets/react4.png)
+- if you didn't want a div inside a div you can use fragments `<>` to surround the two headers. 
+![html in dev console](assets/react5.png)
+- You can create variables, ternary operators, ect. and use with JSX
+![JSX EXAMPLES](assets/react6.png)
 
-
-
+## CREATE COMPONENTS
+* GREAT VS CODE EXTENSION
+```js
+Name: ES7 React/Redux/GraphQL/React-Native snippets
+Id: dsznajder.es7-react-js-snippets
+Description: Simple extensions for React, Redux and Graphql in JS/TS with ES7 syntax
+Version: 3.1.1
+Publisher: dsznajder
+VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets
+```
+- `rcc` - class based component
+- `rce` - class component and export at bottom
+- `rafce` - arrow function that exports at bottom
+* Creates boilerplate of a function component --> DO NOT NEED IMPORT REACT ANYMORE
+![function boilerplate](assets/react7.png)
+* import component into `App.js`
+![import component](assets/react8.png)
