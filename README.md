@@ -122,4 +122,3 @@ class App extends React.Component {
 ![setting prop types](assets/props3.png)
 * Set `PropType` to be required
 ![require prop types](assets/props4.png)
-
