@@ -80,6 +80,7 @@ VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=dsznajd
 - `rce` - class component and export at bottom
 - `rafce` - arrow function that exports at bottom
 * Creates boilerplate of a function component --> DO NOT NEED IMPORT REACT ANYMORE (unless you are creating a class)
+* use `_rafce` to skip import addition
 ![function boilerplate](assets/react7.png)
 ```js
 //EXAMPLE OF USING A CLASS
