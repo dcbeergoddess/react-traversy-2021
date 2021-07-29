@@ -142,3 +142,15 @@ class App extends React.Component {
 ![add styles to components](assets/style3.png)
 
 ## Make Button Component
+* Make Button Component with props, example of reusable components
+![reusable button example](assets/button.png)
+* adding defaults and PropTypes to button
+![button defaults](assets/button1.png)
+
+## EVENTS
+* Intro to setting Events --> 'onClick'
+![button event](assets/button2.png)
+* you can pass in event object to onClick and access position of button along with other properties
+![button event object](assets/button3.png)
+* use `onClick` event as a `prop` since Button is a Component
+![button event as prop](assets/event.png)
