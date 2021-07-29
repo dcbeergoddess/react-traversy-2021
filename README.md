@@ -1,5 +1,6 @@
 # React JS Crash Course 2021
 Follow Along with [Traversy Media React Crash Course 2021](https://www.youtube.com/watch?v=w7ejDZ8SWv8)
+[GITHUB REPO FROM BRAD](https://github.com/bradtraversy/react-crash-2021)
 
 ## What is React?
 * React is a library for building user interfaces
@@ -46,7 +47,7 @@ React Hooks are functions that le us hook into the React state and lifecyle feat
   cd my-app
   npm start
 ```
-* [GITHUB REPO OF REACT TASK TRACKER APP](https://github.com/dcbeergoddess/react-tast-tracker)
+* [MY GITHUB REPO OF REACT TASK TRACKER APP](https://github.com/dcbeergoddess/react-tast-tracker)
 * Here's a look at what you get, in the package.json you have some dependencies --> if in react native you would see `react-native` instead of `react-dom`
 ![new react app](assets/react1.png)
 * Look of the index.js and index.html --> `App` is the Route Component (every component we create will end up in main App component)
@@ -122,3 +123,21 @@ class App extends React.Component {
 ![setting prop types](assets/props3.png)
 * Set `PropType` to be required
 ![require prop types](assets/props4.png)
+
+## Styling 
+1. Can use stylesheet 
+2. external package --> style components
+3. direct or inline css in JavaScript
+
+* Inline CSS Styling in JavaScript using two brackets - `{{}}`
+![inline css styles](assets/style.png)
+* Direct CSS on component --> will use for dynamic styling
+![inline css styles](assets/style1.png)
+
+* Using Style sheet 
+* [Code from Traversy Media's Github](https://github.com/bradtraversy/react-crash-2021/blob/master/src/index.css)
+![stylesheet copy](assets/style2.png)
+* add `classNames` to components from stylesheet, added button on Header Component
+![add styles to components](assets/style3.png)
+
+## Make Button Component
