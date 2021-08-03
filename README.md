@@ -154,3 +154,91 @@ class App extends React.Component {
 ![button event object](assets/button3.png)
 * use `onClick` event as a `prop` since Button is a Component
 ![button event as prop](assets/event.png)
+
+## State and Tasks
+* Created Array of dummy data for tasks --> loop through information to output creating a list using the map array method
+1. in `Tasks.js`
+```js
+  const Tasks = () => {
+  return (
+    <>
+     {tasks.map((task) => (
+        <h3>{task.text}</h3> //JSX
+      ))} 
+    </>
+  )
+}
+```
+2. in `App.js`
+![Adding Tasks to App.js](assets/task.png)
+3. Get warning about key props, parent element (the `h3`) need to have a key prop --> needs to be unique
+```js
+const Tasks = () => {
+  return (
+    <>
+     {tasks.map((task) => (
+        <h3 key={task.id}>{task.text}</h3>
+      ))} 
+    </>
+  )
+}
+```
+4. We don't want the array of tasks to be a separate from our component, we want it to be part of our state  --> we are going to use the `useState` hook to use state inside of a function. Above the return: what you want to call this piece of state, `tasks`, and function to update state, `setTasks`, --> set that to `useState` and paste in default you want to use (in this case the array of tasks)
+```js
+const Tasks = () => {
+  const [tasks, setTasks] = useState([
+      {
+        id: 1,
+        text: 'DMV Alumni Meeting',
+        day: 'July 30th at 1pm',
+        reminder: true,
+      },
+      {
+        id: 2,
+        text: 'Log Coding Hours',
+        day: 'August 4th at 4pm',
+        reminder: true,
+      },
+      {
+        id: 3,
+        text: 'Send Finished Crochet Sweater',
+        day: 'August 6th at 11am',
+        reminder: false,
+      }
+    
+  ])
+  return (
+    <>
+     {tasks.map((task) => (
+        <h3 key={task.id}>{task.text}</h3>
+      ))} 
+    </>
+  )
+}
+```
+- State is immutable, can't directly change, so you can't use  `tasks.push()` to add new tasks, if you want to change any part of the state you use `setTasks`, you recreate it and send it down
+```js
+  //if you want to spread across what is already there and add a new object
+  setTasks([...tasks, {}])
+```
+- Normally you wouldn't have the tasks in the Task component cause we're going to want to access these from other components, use `Redux` or the `Context API`, have a store that hovers over your UI that you can pull different pieces of state from
+- We are going to put it in the `App.js` before the `return` and make it our `global state` and pass it down to our components as `props`
+```js
+//PASS IT INTO TASK COMPONENT IN APP.JS as PROPS
+  return (
+    <div className="container">
+      <Header />
+      <Tasks tasks={tasks} />
+    </div>
+  );
+
+//PASS IT INTO THE TASKS.JS DESTRUCTURE AS PROPS
+const Tasks = ({ tasks }) => {
+  return (
+    <>
+     {tasks.map((task) => (
+        <h3 key={task.id}>{task.text}</h3>
+      ))} 
+    </>
+  )
+}
