@@ -242,3 +242,36 @@ const Tasks = ({ tasks }) => {
     </>
   )
 }
+```
+
+## Create New Task Component
+- Test by Creating a new `Task.js` component with generic h3 that will get outputted for every task for now
+![Setting up Task Component](assets/task1.png)
+- use the task prop you added in `Tasks.js`
+![Use task prop](assets/task2.png)
+- use font awesome for delete icon and add the CDN into your index.html or install `react icons`
+1. `npm i react-icons` --> access to multiple libraries
+2. bring in specific icon FaTimes is the 'x' icon from 'fa' or fontawesome --> `import { FaTimes } from 'react-icons/fa'`
+![Using react icons](assets/task3.png)
+3. Add style to icon
+![style react icons](assets/task4.png)
+* Using the icon to delete specific task --> with context API or Redux there are ways to access state from within components pretty easily can get complicated with redux and reducers, etc. In this case we can just use props and send down a function as a prop and fire that off when we click on task
+1. In `App.js`
+```js
+//DELETE TASK
+const deleteTask = (id) => {
+  console.log('delete', id);
+}
+
+  return (
+    <div className="container">
+      <Header />
+      <Tasks tasks={tasks} onDelete={deleteTask} />
+    </div>
+  );
+}
+```
+2. Pass prop `onDelete` into `Task.js` and `Tasks.js` --> log of `id` defaults to event info
+![onDelete prop passed in](assets/delete.png)
+3. use in `Task.js` as function instead for `onClick`
+![onDelete prop passed in as function](assets/delete1.png)
