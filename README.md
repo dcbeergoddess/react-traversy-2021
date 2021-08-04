@@ -349,3 +349,35 @@ const deleteTask = (id) => {
 ```
 ![Now we see border for reminders](assets/toggle4.png)
 * still goes back to default after refresh because we are just using static data, if we had a back end you'd be making `fetch` or `http` requests to your server as well.
+
+## ADD Form
+1. Create `AddTask.js` in Components --> Simple Form to Display for now
+```js
+  const AddTask = () => {
+  return (
+    <form className='add-form'>
+      <div className='form-control'>
+        <label>Task</label>
+        <input type='text' placeholder='Add Task' />
+      </div>
+      <div className='form-control'>
+        <label>Day & Time</label>
+        <input type='text' placeholder='Add Day & Time' />
+      </div>
+      <div className='form-control'>
+        <label>Set Reminder</label>
+        <input type='checkbox'/>
+      </div>
+
+      <input type='submit' value='Save Task' />
+    </form>
+  )
+}
+
+export default AddTask
+```
+2. Add to `App.js` and add some styling on the form from imported CSS by Traversy Media
+![simple form added to UI](assets/form.png)
+
+## Form Input State
+* each input it going to have it's own piece of **component level state** NOT **app level state**, bring in `useState`
