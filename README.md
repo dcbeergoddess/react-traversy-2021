@@ -548,3 +548,81 @@ const Header = ({ title, onAdd }) => {
 ```
 * this is where react is valuable because it allows you to create really dynamic interfaces and no pages are being reloaded or anything like that
 * Vanilla javascript is just very messy and unorganized and much more difficult
+
+## Build for Production
+* First how you want to build your static assets out if you are ready to deploy `yarn build` or `npm run build` depending on what you are using
+* will create an optimized production build in a  folder called build
+![Build for Production](assets/build.png)
+* this will be our static assets and what we use to deploy where you push to production
+* you want to try this locally you can install the npm package `serve` globally `sudo npm i -g serve` --> basic http server
+* now we can `serve -s build -p 8000` -p = port 
+* SERVING UP APP LOCALLY
+![SERVING UP APP LOCALLY](assets/build1.png)
+
+## Using Backend
+* Use mock backend --> [JSON server NPM](https://www.npmjs.com/package/json-server) --> [GitHub Repo for JSON Server](https://github.com/typicode/json-server)
+* can use our own data, install locally (NOT GLOBALLY)
+* create `db.json` file with some data, can us POST, PUT, PATCH, etc.
+1. `npm i json-server`
+2. create `script` in `package.json` to run it, `"server": "json-server --watch db.json --port 5000"` --> pretend it's a real backend/REST API
+```json
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "server": "json-server --watch db.json --port 5000"
+  },
+```
+3. in terminal `npm run server` --> creates `db.json` file with some dummy data we'll delete, we also run our dev server in new terminal as well `npm start`
+* we want to get data from `db.json` into dev server --> add tasks from `App.js` and set state to empty array
+```js
+  function App() {
+  const [showAddTask, setShowAddTask] = useState(false)
+  const [tasks, setTasks] = useState([]);
+```
+* update tasks syntax
+```json
+{
+  "tasks": [
+    {
+      "id": 1,
+      "text": "DMV Alumni Meeting",
+      "day": "July 30th at 1pm",
+      "reminder": true
+    },
+    {
+      "id": 2,
+      "text": "Log Coding Hours",
+      "day": "August 4th at 4pm",
+      "reminder": true
+    },
+    {
+      "id": 3,
+      "text": "Send Finished Crochet Sweater",
+      "day": "August 6th at 11am",
+      "reminder": false
+    }
+  ]
+}
+```
+* json server will automatically create id's on the back end so we won't have to worry about that anymore
+* now we want to fetch the data from the backend
+* if you visit `localhost:5000/tasks` you will see json of tasks
+![localhost:5000.tasks](assets/json.png)
+* in order to load them when the page loads we are going to use a `hook` --> `useEffect` --> use to create side effects or deal with side effects and if's often used if you want something to happen when the page loads --> it right below were we `useState` in `App.js` (also import like useState) --> takes in arrow function and we have to use async within the function itself --> and await the res/promise --> await data response from json --> console.log the data --> and then cal `fetchTasks()` --> add DEPENDENCY ARRAY at end, we don't have anything to pass in so it's just an empty array
+```js
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const res = await fetch('http://localhost:5000/tasks')
+      const data = await res.json()
+
+      console.log(data)
+    }
+    fetchTasks()
+  }, []) //DEPENDENCY ARRAY
+```
+* As soon as page loads we are getting our data from our json server which you can replace with any backend
+![console logging data from json](assets/json1.png)
+
+
