@@ -479,3 +479,46 @@ const AddTask = () => {
   }
 ```
 ![add new tasks to UI](assets/form5.png)
+
+## Use Add Button to Toggle Add Form
+1. Add new piece of state in the `App.js` for `showAddTask` and set to false as default
+```js
+function App() {
+  const [showAddTask, setShowAddTask] = useState(false)
+  const [tasks, setTasks] = useState([
+```
+2. embed in in AddTask, wrap in curly braces and say if `showAddTask` is `true` then show that component, shorter way of doing a ternary without an else, we just want ot see if it's true, is so do this, if not we do nothing.
+```js
+  return (
+    <div className="container">
+      <Header />
+      {showAddTask && <AddTask onAdd={addTask} />}
+      {/* IF THERE ARE TASKS, show Tasks, else show message */}
+      {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} /> : 'No Tasks To Show'}
+    </div>
+  ); 
+```
+3. Use button to toggle state, we need to do a few things
+* Button is inside the `Header` --> add prop `onAdd` and add function to setShowAddTask and we want to set it to whatever the opposite is of the current state 
+```js
+  return (
+    <div className="container">
+      <Header onAdd={() => setShowAddTask(!showAddTask)} />
+      {/* If showAddTask is true we show AddTask else we do nothing */}
+      {showAddTask && <AddTask onAdd={addTask} />}
+      {/* IF THERE ARE TASKS, show Tasks, else show message */}
+      {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} /> : 'No Tasks To Show'}
+    </div>
+  );
+```
+* Pass into `Header.js` as prop and change `onClick` to `onAdd` and button now toggles the form
+```js
+const Header = ({ title, onAdd }) => {
+  return (
+    <header className='header'>
+      <h1>{title}</h1>
+      <Button color='green' text='Add' onClick={onAdd} />
+    </header>
+  )
+}
+```
