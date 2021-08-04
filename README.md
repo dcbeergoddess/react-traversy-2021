@@ -641,3 +641,28 @@ const Header = ({ title, onAdd }) => {
 ```
 * We can see console log of requests and responses in json server
 ![json server requests](assets/json2.png)
+
+## Connect Add to Server
+* We want to be able to add a task and have it persist to our backend
+* no longer need to create id in `addTask()`, because it assigns an id for us --> make function async --> await response/fetch --> route is just `(server goes here)/tasks` --> with method `POST` --> add `headers` since we are adding data and we need to specify our content type (`application/json`) --> set `body`(data) that we are sending and set it to JSON.stringify which will turn it from a JS Object to JSON string and what we are sending is the task.
+* then we want to get the data here, data that is return is just the task that is added and then call `setTasks` again, since it is an array, take existing tasks and then add onto it, data, which is the newTask that was just created
+```js
+  const addTask = async (task) => {
+    const res = await fetch('http://localhost:5000/task', {
+      method: 'POST',
+      headers: {
+        'Content-type' : 'application/json'
+      },
+      body: JSON.stringify(task)
+    })
+
+    const data = res.json()
+
+    setTasks([...tasks, data])
+  }
+```
+- NOW I AM GETTING THE KEY ERROR FOR CHILD ELEMENT BRAD GOT BEFORE WITH `task.id` vs `index` --> not creating id anymore
+- ALSO NOT WORKING AT THE MOMENT, data in json file but not being served up to UI 
+![ERROR](assets/json3.png)
+- we forgot to `await` the response from json...
+![DEBUGGED](assets/json4.png)
