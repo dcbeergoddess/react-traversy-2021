@@ -249,6 +249,8 @@ const Tasks = ({ tasks }) => {
 ![Setting up Task Component](assets/task1.png)
 - use the task prop you added in `Tasks.js`
 ![Use task prop](assets/task2.png)
+
+## ADD Delete Icon and Delete Function Prop 
 - use font awesome for delete icon and add the CDN into your index.html or install `react icons`
 1. `npm i react-icons` --> access to multiple libraries
 2. bring in specific icon FaTimes is the 'x' icon from 'fa' or fontawesome --> `import { FaTimes } from 'react-icons/fa'`
@@ -275,3 +277,59 @@ const deleteTask = (id) => {
 ![onDelete prop passed in](assets/delete.png)
 3. use in `Task.js` as function instead for `onClick`
 ![onDelete prop passed in as function](assets/delete1.png)
+4. use `setState` instead of console.log
+```js
+//DELETE TASK
+const deleteTask = (id) => {
+  //for each task you want to filter where the task id is not equal to the id
+  setTasks(tasks.filter((task) => task.id !== id))
+}
+```
+5. set default message for when there are no tasks
+```js
+  return (
+    <div className="container">
+      <Header />
+      {/* IF THERE ARE TASKS, show Tasks, else show message */}
+      {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} /> : 'No Tasks To Show'}
+    </div>
+  );
+```
+- They will come back when page refreshes since this is the UI and that is what react does, you can turn into full stack app by having back end and have some kind of API you can make requests to and fetch data from --> will try out at end with `JSON Server`
+
+## Add Reminder
+* Want to double click and have a class (in css under `.task.reminder`) that will change the task to the opposite of whatever is set and if it is true have  border
+1. add a reminder toggle in `App.js`, and pass prop into `Tasks`
+```js
+//Toggle Reminder
+  const toggleReminder = (id) => {
+    console.log(id);
+  }
+
+  return (
+    <div className="container">
+      <Header />
+      {/* IF THERE ARE TASKS, show Tasks, else show message */}
+      {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} /> : 'No Tasks To Show'}
+    </div>
+  );
+```
+2. catch the prop in `Tasks.js`, pass into `Task` and then add to main div in `Task.js` 
+![Console.log of DoubleClick for toggle](assets/toggle.png)
+3. now we want to add logic to toggle reminder from true to false or false to true --> many ways to do this, we are going to use map
+```js
+   //Toggle Reminder
+  const toggleReminder = (id) => {
+    //use map to toggle --> map through `tasks` in our state and for each `task` 
+    //where `task.id` in current iteration is equal to the id that's passed in 
+    //then we have specific object (else the task) 
+    //we want to copy && spread across all the task properties and values (of the task that matches) but want to change the reminder so the reminder i'm going to set is opposite of whatever that specific task reminder is
+    setTasks(tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder } : task))
+  }
+```
+4. Using React Dev Tools --> go to Components
+![react dev tools options](assets/toggle1.png)
+* now we can see our component tree --> look on App in Tree and check out State
+![react dev tools tree](assets/toggle2.png)
+* double click on first task and the state changes
+![react dev tools tree after doubleClick](assets/toggle3.png)
