@@ -703,3 +703,82 @@ const Header = ({ title, onAdd }) => {
 ```
 * New Server Logs of Request/Response
 ![screenshot of new reminderToggle](assets/json5.png)
+
+## ROUTING, FOOTER, and ABOUT
+* Right now everything is in one single page in `App.js`
+* Can use `react-router-dom` package to create routes to different pages
+* Create Footer with Link to an About Page
+1. Create `Footer.js` component
+```js
+const Footer = () => {
+  return (
+    <footer>
+      <p>Copyright &copy; 2021</p>
+      <a href="/about">About</a>
+    </footer>
+  )
+}
+```
+2. import component into `App.js` and embed it into return
+![Initial set up of Footer](assets/routing.png)
+3. Create `About.js` component
+```js
+const About = () => {
+  return (
+    <div>
+      <h4>Version 1.0.0</h4>
+      ,<a href="/">Go Back</a>
+    </div>
+  )
+}
+```
+4. Now bring about component into `App.js` and use router, so import from `react-router-dom` --> we want to bring in two things `BrowserRouter` (will use the HTML5 push state) --> give alias as `Router` and `Route`
+```js
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route} from 'react-router-dom'
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Tasks from './components/Tasks';
+import AddTask from './components/AddTask'
+import About from './components/About'
+```
+5. wrap everything in our return around with `<Router>` and now that it is wrapped we can use routes, above Footer add in `Route` and pass in `path` of '/about' and pass in `component` 
+* right now it still all on one-page, we will need to wrap task and addTask component in it's own route
+![before we give task, and addTask a route](assets/routing1.png)
+* But them in an index route`'/'` we also want to add `exact` or its going to do the same thing and show the about since it's first going to match the slash, instead of component we can use `render`, which takes an arrow function with props and point function to a set of parentheses and add a fragment, and add our embedded `task` an `addTask`
+![after route is added around embedded task components](assets/routing2.png)
+* now see how the page reloads now when we click on about or go back, we want to stop that from happen, instead of using `a` tag we are going to use `link` from `react-router-dom` 
+* import into `About.js`, replace `a` with `Link` and `href` with `to`
+* Do Same thing in `Footer.js` --> now both are instant and does not reload the page
+![new Link tags from react-router-dom](assets/routing3.png)
+* Get rid of the Add button when you click about, we can go to `Header.js` and import hook `useLocation` `from react-router-dom`
+* allows you to look at the route we are currently on
+* above return create `location` variable and set to `useLocation` which gives us access to `location.pathname`
+* wrap button in curly braces so we can add a condition that if equal to index then show the button
+```js
+import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
+import Button from './Button'
+
+const Header = ({ title, onAdd, showAdd }) => {
+  const location = useLocation()
+
+
+  return (
+    <header className='header'>
+      <h1>{title}</h1>
+      {/* if location.pathname is equal to index then show button */}
+      {location.pathname === '/' && ( 
+        <Button 
+          color={showAdd ? 'red' : 'green'} 
+          text={showAdd ? 'Close' : 'Add'} 
+          onClick={onAdd} 
+        />
+      )}
+    </header>
+  )
+}
+```
+* working in app
+![add button shows only on index](assets/routing4.png)
+
