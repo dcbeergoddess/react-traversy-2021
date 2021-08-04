@@ -666,3 +666,40 @@ const Header = ({ title, onAdd }) => {
 ![ERROR](assets/json3.png)
 - we forgot to `await` the response from json...
 ![DEBUGGED](assets/json4.png)
+
+## Connect Reminder to DB/SERVER
+* will happen in `toggleReminder` but first you want to be able to get a single task from the server, copy `fetchTasks` and change to `fetchTask` and it's going to take in an `id` --> and use id in `route`
+```js
+  //FETCH TASK
+  const fetchTask = async (id) => {
+    const res = await fetch(`http://localhost:5000/tasks/${id}`)
+    const data = await res.json()
+
+    return data
+  }
+```
+* then go down to `toggleReminder` and we are going to update --> not updating a name but down the same way --> can add if you want
+* create variable to grab task we want to toggle, change to async, and await the task we are fetching, then we put in variable for updated task which is an event and going to have all same properties of `taskToToggle` and change `reminder` to whatever the opposite of `taskToToggle.reminder` is
+* Now we save response to variable, doing update so we will want the id in route, and add method of PUT, add headers since we are sending data and need content type, Json.stringify the body/data
+* then await on response and save to data and in setTasks, data.reminder to set state to updated task data. 
+```js
+    //TOGGLE REMINDER
+  const toggleReminder = async (id) => {
+    const taskToToggle = await fetchTask(id)
+    const updTask = {...taskToToggle, reminder: !taskToToggle.reminder}
+
+    const res = await fetch(`http:localhost:5000/tasks/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(updTask)
+    })
+
+    const data = await res.json()
+
+    setTasks(tasks.map((task) => task.id === id ? {...task, reminder: data.reminder } : task))
+  }
+```
+* New Server Logs of Request/Response
+![screenshot of new reminderToggle](assets/json5.png)
