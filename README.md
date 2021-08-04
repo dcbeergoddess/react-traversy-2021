@@ -624,5 +624,6 @@ const Header = ({ title, onAdd }) => {
 ```
 * As soon as page loads we are getting our data from our json server which you can replace with any backend
 ![console logging data from json](assets/json1.png)
-
+* we may want to use fetchTasks elsewhere so we are going to define it outside useEffect and instead have function to getTasks that will be async since fetchTasks returns a promise --> fetch tasks from server and await fetchTasks, and then setTasks and add tasks from server, and then call `getTasks()`
+* Brad has issue with using `task.id` as `key`, and changed it to `index` instead but no issues on my app right now with how it is
 
