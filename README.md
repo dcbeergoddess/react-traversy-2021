@@ -627,3 +627,17 @@ const Header = ({ title, onAdd }) => {
 * we may want to use fetchTasks elsewhere so we are going to define it outside useEffect and instead have function to getTasks that will be async since fetchTasks returns a promise --> fetch tasks from server and await fetchTasks, and then setTasks and add tasks from server, and then call `getTasks()`
 * Brad has issue with using `task.id` as `key`, and changed it to `index` instead but no issues on my app right now with how it is
 
+#### Connect Delete Functionality to Server 
+* add logic to  `deleteTask()` and make it async (since we'll be awaiting the server) --> don't need to save it as variable since we are not getting any data back --> add second argument of an object where we specify the method of this request to be a delete
+```js
+  //DELETE TASK
+  const deleteTask = async (id) => {
+    await fetch(`http://localhost:5000/tasks/${id}`, {
+      method: 'DELETE'
+    })
+    //for each task you want to filter where the task id is not equal to the id
+    setTasks(tasks.filter(task => task.id !== id));
+  };
+```
+* We can see console log of requests and responses in json server
+![json server requests](assets/json2.png)
