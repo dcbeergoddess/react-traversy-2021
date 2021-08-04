@@ -380,4 +380,102 @@ export default AddTask
 ![simple form added to UI](assets/form.png)
 
 ## Form Input State
-* each input it going to have it's own piece of **component level state** NOT **app level state**, bring in `useState`
+1. each input it going to have it's own piece of **component level state** NOT **app level state**, bring in `useState` and set up for each input with defaults (reminder = false, text and day = '')
+```js
+import { useState } from 'react'
+
+const AddTask = () => {
+  const [text, setText] = useState('')
+  const [day, setDay] = useState('')
+  const [reminder, setReminder] = useState(false)
+```
+2. In `input` for text, the `value` of text is going to be the text from the state but we also need an `onChange` because when you start to type in the input that's going ot fire off this on change, it's a controlled component, going to have function where we pass in the event object and directly call setText from here and set it to `e.target.value` which will be whatever is typed in, same for `day` and `setDay`
+```js
+      <div className='form-control'>
+        <label>Task</label>
+        <input 
+          type='text' 
+          placeholder='Add Task' 
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+```
+* for the checkbox use `currentTarget.checked` --> give us either a true or false value if that is checked or not
+* Look in React-Dev-Tools under AddTask as we can see the state
+![form state](assets/form1.png)
+* you can add in input text an state changes, hit save task and page back to default state right now
+![form state with added text](assets/form2.png)
+4. in `App.js` add logic for ADD TASK --> it will take in task, and console.log task for now
+```js
+  //ADD TASK
+  const addTask = (task) => {
+    console.log(task)
+  }
+```
+5. pass it into as prop on AddTask
+```js
+  return (
+    <div className="container">
+      <Header />
+      <AddTask onAdd={addTask} />
+      {/* IF THERE ARE TASKS, show Tasks, else show message */}
+      {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} /> : 'No Tasks To Show'}
+    </div>
+  );
+```
+6. in `AddTask.js` component we want to take in `onAdd` and add `onSubmit` event to form and set that to `onSubmit`
+*define onSubmit above return statement, we are not calling onAdd directly
+* onSubmit will take in the `event object`, we need `e.preventDefault()` so it does not submit to a page
+* add validation for the task text --> if text is not there, do an alert --> if that passed then we are going to call `onAdd` and pass in an object with the text, day and reminder
+* then you also want to clear the form so call default state again
+```js
+  const onSubmit = (e) => {
+    e.preventDefault()
+
+    if (!text) {
+      alert('Please Add a Task')
+      return
+    }
+
+    onAdd({ text, day, reminder })
+
+    setText('')
+    setDay('')
+    setReminder(false)
+  }
+```
+* on checkbox reminder, set checked to reminder
+```js
+      <div className='form-control form-control-check'>
+        <label>Set Reminder</label>
+        <input 
+          type='checkbox'
+          checked={reminder}
+          value={reminder}
+          onChange={(e) => setReminder(e.currentTarget.checked)}
+        />
+```
+* Test adding tasks and look in console
+![form data console.log](assets/form3.png)
+6. Instead of console logging we want to add this to our state so in order to do that --> there are a bunch of ways --> since we are not dealing with a back end that creates an id we'll want to add an id to `addTask` function --> generate random number for id
+```js
+ //ADD TASK
+  const addTask = (task) => {
+    const id = Math.floor(Math.random() * 10000) + 1
+
+    console.log(id)
+    console.log(task)
+  }
+```
+![console logging id](assets/form4.png)
+7. Now we will create new task and add id, plus copy the task text, day and reminder and add to object as well.
+* setTasks as array, copy tasks already there and add new task onto it
+```js
+  //ADD TASK
+  const addTask = (task) => {
+    const id = Math.floor(Math.random() * 10000) + 1
+    const newTask = {id, ...task}
+    setTasks([...tasks, newTask])
+  }
+```
+![add new tasks to UI](assets/form5.png)
