@@ -522,3 +522,29 @@ const Header = ({ title, onAdd }) => {
   )
 }
 ```
+4. Update button style based on state
+* in `App.js`, in addition to onAdd prop, pass in whatever the value of showAddTask is
+```js
+  return (
+    <div className="container">
+      <Header 
+        onAdd={() => setShowAddTask(!showAddTask)}
+        showAdd={showAddTask} 
+      />
+```
+* back in `Header.js`, pass in `showAdd` prop and it will be either true or false if it is being shown or not
+* change button text to be dynamic, if showAdd is true then we want to show 'close' else we show 'add', do same for color
+```js
+  return (
+    <header className='header'>
+      <h1>{title}</h1>
+      <Button 
+        color={showAdd ? 'red' : 'green'}  
+        text={showAdd ? 'Close' : 'Add'} 
+        onClick={onAdd} 
+      />
+    </header>
+  )
+```
+* this is where react is valuable because it allows you to create really dynamic interfaces and no pages are being reloaded or anything like that
+* Vanilla javascript is just very messy and unorganized and much more difficult
