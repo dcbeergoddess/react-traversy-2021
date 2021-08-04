@@ -333,3 +333,19 @@ const deleteTask = (id) => {
 ![react dev tools tree](assets/toggle2.png)
 * double click on first task and the state changes
 ![react dev tools tree after doubleClick](assets/toggle3.png)
+5. Nothing in UI that lets us know that the state has changed yet, use class of reminder in `Task.js` to add a border to the edge
+* On `className` make it into an expression and still want the class `task` (that will be there no matter what), but add a condition in a template literal, if `task.reminder` is true then we're going to have the class of `reminder`, else nothing.
+```js
+    <div className={`task ${task.reminder ? 'reminder' : ''}`} onDoubleClick={() => onToggle(task.id)}>
+      <h3>
+        {task.text} 
+        <FaTimes 
+        style={{color: 'red', cursor: 'pointer'}}
+        onClick={() => onDelete(task.id)} 
+        />
+      </h3>
+      <p>{task.day}</p>
+    </div>
+```
+![Now we see border for reminders](assets/toggle4.png)
+* still goes back to default after refresh because we are just using static data, if we had a back end you'd be making `fetch` or `http` requests to your server as well.
